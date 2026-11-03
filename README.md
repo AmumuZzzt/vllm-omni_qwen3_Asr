@@ -137,5 +137,30 @@ D:\codex_project\vllm\
 ├─ remote.ps1                   # 远程执行助手
 ├─ LOCAL-ONLY-CREDENTIALS.md    # 凭据（gitignore，禁止外传）
 ├─ .gitignore
-└─ .agent\                      # 临时探测脚本（gitignore）
+├─ .agent\                      # 临时探测脚本（gitignore）
+└─ omni-study\                  # 学习辅助：手搓版 mini_omni + 测试（不计入正式学习路线）
 ```
+
+## 8. GitHub 同步工作流（2026-11-03 起）
+
+远端：`https://github.com/AmumuZzzt/vllm-omni_qwen3_Asr`（**Private**）
+
+分工：**本地读代码/写代码并提交推送；服务器只拉取（pull）以运行实验。**
+
+```powershell
+# 本地：提交 + 推送（本仓库 git config 已设 http.proxy="" 绕过失效代理）
+cd D:\codex_project\vllm
+git add -A; git commit -m "..." ; git push
+
+# 服务器：拉取到工作区（首次 clone）
+git clone https://github.com/AmumuZzzt/vllm-omni_qwen3_Asr.git /root/vllm-work/vllm-lab
+# 之后更新
+cd /root/vllm-work/vllm-lab && git pull --ff-only
+```
+
+注意事项：
+
+- 本机全局 git 代理指向 `127.0.0.1:7890`，该代理常不在线；本仓库已用 `git config --local http.proxy ""` 覆盖为直连，**不要删这条配置**。
+- git 凭据助手依赖命名管道，DSH 受限模式下会失败；**推送需要一次性的完全权限**（凭据从 Windows 凭据管理器读取，令牌不落盘、不进日志）。
+- `LOCAL-ONLY-CREDENTIALS.md`、`*.cred`、`*.pem`、`id_rsa*` 已在 `.gitignore` 中，**任何情况下不得提交**。
+- 服务器上的实验源码树（`/opt/qwen3-asr/source-study` 等）**不在**本仓库管理范围内，仍按学习计划单独处理。
