@@ -1,0 +1,15 @@
+# local-only agent workspace: contains credentials & private notes. NEVER commit.
+.agent/
+.env
+*.cred
+
+# credentials & secrets (README §1: never upload, never commit)
+LOCAL-ONLY-CREDENTIALS.md
+*credentials*.md
+*.pem
+id_rsa*
+
+# python
+__pycache__/
+*.pyc
+
